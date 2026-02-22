@@ -538,3 +538,25 @@ details[open] .arrow {
 details .super-content {
     padding: 20px;
 }
+
+/* Fix html2pdf color compatibility */
+* {
+  color-scheme: light;
+}
+/* ===== PDF SAFE MODE ===== */
+.pdf-mode * {
+  color: #000 !important;
+  background-color: #fff !important;
+  border-color: #000 !important;
+}
+.print-view {
+  display: none;
+}
+
+.pdf-mode .print-view {
+  display: block;
+}
+
+.pdf-mode form {
+  display: none;
+}

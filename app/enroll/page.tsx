@@ -1,114 +1,143 @@
 "use client";
 
+
+import { useRef } from "react";
+import { useEffect } from "react";
+
 import { useState } from 'react';
 import Link from 'next/link';
 
 export default function EnrollPage() {
+    const pdfRef = useRef(null);
     const [status, setStatus] = useState<string>('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
+    const [formDataState, setFormDataState] = useState<any>({});
 
+useEffect(() => {
+  setIsMounted(true);
+}, []);
+   const downloadPDF = async () => {
+  const element = pdfRef.current;
+  if (!element) return;
+
+  // ✅ enable safe colors
+  element.classList.add("pdf-mode");
+
+  const html2pdf = (await import("html2pdf.js")).default;
+
+  await html2pdf()
+    .set({
+      margin: 10,
+      filename: "patient-form.pdf",
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true,
+      },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    })
+    .from(element)
+    .save();
+
+  // ✅ restore original styles
+  element.classList.remove("pdf-mode");
+};
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        setStatus('Submitting form...');
+  e.preventDefault();
 
-        const form = e.currentTarget;
-        const formData = new FormData(form);
+  setIsSubmitting(true);
+  setStatus("Submitting form...");
 
-        // Convert FormData to JSON object for the API
-        const data: Record<string, any> = {};
-        formData.forEach((value, key) => {
-            // Handle checkbox arrays (ending in [])
-            if (key.endsWith('[]')) {
-                const cleanKey = key.slice(0, -2);
-                if (!data[cleanKey]) {
-                    data[cleanKey] = [];
-                }
-                (data[cleanKey] as string[]).push(value as string);
-            } else {
-                data[key] = value;
-            }
-        });
+  const form = e.currentTarget;
+  const formData = new FormData(form);
+  const data: any = Object.fromEntries(formData.entries());
+  setFormDataState(data);
 
-        // Also handle nested objects for red_flags, general_findings if needed by flattened names
-        // The schema expects specific structures for red_flags and general_findings.
-        // However, the original HTML used flat names like rf_onset_thunderclap.
-        // I need to map these to the nested schema structure OR update the API to handle the mapping.
-        // For simplicity, I'll update the API body construction right here before sending.
+  /* ---------------- RED FLAGS ---------------- */
+  const red_flags: Record<string, boolean> = {};
+  const rfKeys = [
+    'onset_thunderclap','onset_progressive','onset_after_50','onset_pregnancy',
+    'worst_headache','freq_increase','severity_increase','exertion_trigger',
+    'sexual_activity','fever','seizure','neurological_deficit','neck_stiffness',
+    'post_trauma','prior_investigation','systemic_illness','weight_gain',
+    'tinnitus_tvo','none'
+  ];
 
-        // Actually, looking at the schema I defined, I used:
-        // red_flags: { onset_thunderclap: Boolean, ... }
-        // But the form inputs are named `rf_onset_thunderclap`.
-        // I should create a transformer or just update the form inputs to match schema or vice versa.
-        // Or simpler: Update the schema to use flat keys if preferred, or Just map them here.
-        // Mapping here is cleaner for the frontend data structure.
+  rfKeys.forEach(k => {
+    if (data[`rf_${k}`]) {
+      red_flags[k] = true;
+      delete data[`rf_${k}`];
+    }
+  });
 
-        // Red Flags Mapping
-        const red_flags: Record<string, boolean> = {};
-        const rfKeys = [
-            'onset_thunderclap', 'onset_progressive', 'onset_after_50', 'onset_pregnancy',
-            'worst_headache', 'freq_increase', 'severity_increase', 'exertion_trigger', 'sexual_activity',
-            'fever', 'seizure', 'neurological_deficit', 'neck_stiffness', 'post_trauma',
-            'prior_investigation', 'systemic_illness', 'weight_gain', 'tinnitus_tvo', 'none'
-        ];
-        rfKeys.forEach(k => {
-            if (data[`rf_${k}`]) {
-                red_flags[k] = true;
-                delete data[`rf_${k}`];
-            }
-        });
-        if (Object.keys(red_flags).length > 0) data.red_flags = red_flags;
+  if (Object.keys(red_flags).length) data.red_flags = red_flags;
 
-        // Autonomic Symptoms Mapping
-        const autonomic_symptoms: Record<string, any> = {};
-        const autoKeys = ['eyelid_edema', 'lacrimation', 'conjunctival_injection', 'nasal_congestion', 'rhinorrhea', 'facial_sweating', 'lid_droop', 'aural_fullness'];
-        autoKeys.forEach(k => {
-            if (data[k]) {
-                autonomic_symptoms[k] = data[k];
-                delete data[k];
-            }
-        })
-        if (Object.keys(autonomic_symptoms).length > 0) data.autonomic_symptoms = autonomic_symptoms;
+  /* ---------------- AUTONOMIC ---------------- */
+  const autonomic_symptoms: Record<string, any> = {};
+  const autoKeys = [
+    'eyelid_edema','lacrimation','conjunctival_injection','nasal_congestion',
+    'rhinorrhea','facial_sweating','lid_droop','aural_fullness'
+  ];
 
+  autoKeys.forEach(k => {
+    if (data[k]) {
+      autonomic_symptoms[k] = data[k];
+      delete data[k];
+    }
+  });
 
-        // General Findings Mapping
-        const general_findings: Record<string, boolean> = {};
-        // ge_pallor -> pallor
-        const gfKeys = [
-            'pallor', 'icterus', 'cyanosis', 'clubbing', 'pedal_edema', 'lymphadenopathy', 'raised_jvp', 'skin_markers', 'none'
-        ];
-        gfKeys.forEach(k => {
-            if (data[`ge_${k}`]) {
-                general_findings[k] = true;
-                delete data[`ge_${k}`];
-            }
-        });
-        if (Object.keys(general_findings).length > 0) data.general_findings = general_findings;
+  if (Object.keys(autonomic_symptoms).length)
+    data.autonomic_symptoms = autonomic_symptoms;
 
+  /* ---------------- GENERAL FINDINGS ---------------- */
+  const general_findings: Record<string, boolean> = {};
+  const gfKeys = [
+    'pallor','icterus','cyanosis','clubbing',
+    'pedal_edema','lymphadenopathy','raised_jvp','skin_markers','none'
+  ];
 
-        try {
-            const res = await fetch('/api/enroll', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
+  gfKeys.forEach(k => {
+    if (data[`ge_${k}`]) {
+      general_findings[k] = true;
+      delete data[`ge_${k}`];
+    }
+  });
 
-            if (res.ok) {
-                setStatus('✅ Form submitted successfully');
-                form.reset();
-            } else {
-                const errorData = await res.json();
-                setStatus(`❌ Error saving data: ${errorData.error || 'Unknown error'}`);
-            }
-        } catch (error) {
-            console.error('Fetch error:', error);
-            setStatus('❌ Submission failed');
-        } finally {
-            setIsSubmitting(false);
-        }
-    };
+  if (Object.keys(general_findings).length)
+    data.general_findings = general_findings;
+
+  /* ---------------- API CALL ---------------- */
+  try {
+    const res = await fetch("/api/enroll", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (res.ok) {
+      setStatus("✅ Form submitted successfully");
+
+      setTimeout(() => {
+        downloadPDF();
+      }, 500);
+      console.log("PDF downloading...");
+
+      form.reset();
+    } else {
+      const err = await res.json();
+      setStatus(`❌ Error: ${err.error || "Unknown error"}`);
+    }
+  } catch (error) {
+    console.error(error);
+    setStatus("❌ Submission failed");
+  } finally {
+    setIsSubmitting(false);
+  }
+  };
+
 
     return (
         <div className="flex flex-col min-h-screen bg-[#f5f7fb]">
@@ -123,6 +152,19 @@ export default function EnrollPage() {
                     <p className="text-sm opacity-90 m-0">Patient Enrollment Form</p>
                 </div>
             </header>
+{/* ⭐ PDF AREA START */}
+<div ref={pdfRef} className="pdf-area">
+
+  {/* ===== PRINT VIEW ===== */}
+  <div className="print-view">
+    <h2>Patient Enrollment Form</h2>
+
+    <p><strong>Name:</strong> {formDataState.name}</p>
+    <p><strong>Age:</strong> {formDataState.age}</p>
+    <p><strong>Gender:</strong> {formDataState.gender}</p>
+    <p><strong>Address:</strong> {formDataState.address}</p>
+
+  </div>
 
             <form id="enrollmentForm" onSubmit={handleSubmit} className="flex-1 max-w-[1200px] w-full mx-auto mt-6 px-6 pb-20">
 
@@ -806,9 +848,10 @@ export default function EnrollPage() {
                 </div>
 
             </form>
+            </div>   {/* ⭐ PDF AREA END */}
             <footer className="p-4 text-center text-xs text-[#666] mt-auto">
                 ©️ Headache Registry Project
             </footer>
         </div>
     );
-}
+    }

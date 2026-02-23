@@ -21,6 +21,10 @@ body {
     background: #f5f7fb;
     color: #333;
 }
+/* ⬇️ ADD THIS */
+body.pdf-active {
+    display: block !important;
+}
 
 /* Ensure Next.js root div takes full height if needed, though body flex might handle it */
 /* #__next { flex: 1; display: flex; flex-direction: column; } */
@@ -549,14 +553,51 @@ details .super-content {
   background-color: #fff !important;
   border-color: #000 !important;
 }
-.print-view {
-  display: none;
+/* =========================
+   PDF SAFE FIXES (STEP 2)
+========================= */
+
+/* Disable animations during PDF */
+.pdf-mode *,
+.pdf-mode *::before,
+.pdf-mode *::after {
+  animation: none !important;
+  transition: none !important;
 }
 
-.pdf-mode .print-view {
-  display: block;
+/* Prevent content from being cut between pages */
+.super-section,
+.form-section {
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* Force visible colors */
+.pdf-mode,
+.pdf-mode * {
+  color: rgb(0, 0, 0) !important;
+  background-color: rgb(255, 255, 255) !important;
+  border-color: rgb(0, 0, 0) !important;
+}
+/* =========================
+   FINAL PDF HEIGHT FIX
+========================= */
+
+.pdf-mode {
+  display: block !important;
+  height: auto !important;
+  min-height: auto !important;
+  overflow: visible !important;
 }
 
 .pdf-mode form {
-  display: none;
+  display: block !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.pdf-mode .super-section,
+.pdf-mode .form-section {
+  page-break-inside: avoid;
+  break-inside: avoid;
 }

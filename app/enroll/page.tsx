@@ -16,22 +16,21 @@ export default function EnrollPage() {
 useEffect(() => {
   setIsMounted(true);
 }, []);
-  const downloadPDF = async () => {
+ const downloadPDF = async () => {
   const element = pdfRef.current;
   if (!element) return;
 
-  // 1️⃣ Open all accordions
+  // Open all accordions
   element.querySelectorAll("details").forEach(d => (d.open = true));
 
-  // 2️⃣ Clone content
+  // Clone content
   const clone = element.cloneNode(true) as HTMLElement;
   clone.classList.add("pdf-mode");
-  // After cloning
-clone.style.width = "210mm";
-clone.style.height = "auto";
-clone.style.maxHeight = "none";
+  clone.style.width = "210mm";
+  clone.style.height = "auto";
+  clone.style.maxHeight = "none";
 
-  // 3️⃣ Create hidden iframe
+  // Hidden iframe for rendering
   const iframe = document.createElement("iframe");
   iframe.style.position = "fixed";
   iframe.style.right = "0";
@@ -40,7 +39,6 @@ clone.style.maxHeight = "none";
   iframe.style.height = "297mm";
   iframe.style.border = "0";
   iframe.style.visibility = "hidden";
-
   document.body.appendChild(iframe);
 
   const iframeDoc = iframe.contentDocument!;
@@ -62,6 +60,7 @@ clone.style.maxHeight = "none";
             background: white !important;
             box-shadow: none !important;
           }
+          /* Page break handling via CSS instead of html2pdf option */
           .super-section,
           .form-section {
             page-break-inside: avoid;
@@ -73,37 +72,30 @@ clone.style.maxHeight = "none";
     </html>
   `);
   iframeDoc.close();
-
   iframeDoc.body.appendChild(clone);
 
-  // 4️⃣ Wait for layout to fully calculate
   await new Promise(res => setTimeout(res, 500));
 
   const html2pdf = (await import("html2pdf.js")).default;
 
-  await html2pdf()
-    .set({
-      filename: "patient-enrollment-form.pdf",
-      margin: 10,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        backgroundColor: "#ffffff",
-        useCORS: true,
-        windowWidth: clone.scrollWidth,
-        windowHeight: clone.scrollHeight,
-      },
-      jsPDF: {
-        unit: "mm",
-        format: "a4",
-        orientation: "portrait",
-      },
-      pagebreak: { mode: ["css", "legacy"] },
-    })
-    .from(clone)
-    .save();
+  const options = {
+  margin: 10,
+  filename: "file.pdf",
+  image: { type: "jpeg", quality: 0.98 },
+  html2canvas: { scale: 2 },
+  jsPDF: {
+    unit: "mm",
+    format: "a4",
+    orientation: "portrait",
+  },
+};
 
-  // 5️⃣ Cleanup
+html2pdf()
+  .set(options as any)
+  .from(clone)
+  .save();
+
+  // Cleanup
   document.body.removeChild(iframe);
 };
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

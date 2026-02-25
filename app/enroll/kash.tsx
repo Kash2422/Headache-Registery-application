@@ -37,7 +37,7 @@ clone.style.maxHeight = "none";
   iframe.style.right = "0";
   iframe.style.bottom = "0";
   iframe.style.width = "210mm";
-  iframe.style.height = "297mm";
+  iframe.style.height = "auto";
   iframe.style.border = "0";
   iframe.style.visibility = "hidden";
 
@@ -51,23 +51,40 @@ clone.style.maxHeight = "none";
       <head>
         <meta charset="utf-8" />
         <style>
-          body {
-            margin: 0;
-            padding: 0;
-            background: white;
-            font-family: Inter, system-ui, sans-serif;
-          }
-          * {
-            color: black !important;
-            background: white !important;
-            box-shadow: none !important;
-          }
-          .super-section,
-          .form-section {
-            page-break-inside: avoid;
-            break-inside: avoid;
-          }
-        </style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+    font-family: Inter, system-ui, sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+    color: black !important;
+    background: white !important;
+    box-shadow: none !important;
+  }
+
+  /* 🔑 TEXT FIX (MOST IMPORTANT) */
+  p, span, div, td, th, label {
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.4 !important;
+  }
+
+  /* 🔑 REMOVE CLIPPING */
+  .pdf-mode * {
+    overflow: visible !important;
+    max-width: 100% !important;
+  }
+
+  .super-section,
+  .form-section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+</style>
       </head>
       <body></body>
     </html>
@@ -87,12 +104,11 @@ clone.style.maxHeight = "none";
       margin: 10,
       image: { type: "jpeg", quality: 0.98 },
       html2canvas: {
-        scale: 2,
-        backgroundColor: "#ffffff",
-        useCORS: true,
-        windowWidth: clone.scrollWidth,
-        windowHeight: clone.scrollHeight,
-      },
+  scale: 1.5, // 🔑 prevents right-side clipping
+  backgroundColor: "#ffffff",
+  useCORS: true,
+  windowWidth: clone.scrollWidth,
+},
       jsPDF: {
         unit: "mm",
         format: "a4",
@@ -188,9 +204,10 @@ clone.style.maxHeight = "none";
 
       form.reset();
     } else {
-      const err = await res.json();
-      setStatus(`❌ Error: ${err.error || "Unknown error"}`);
-    }
+  const text = await res.text();
+  console.error("Server response:", text);
+  setStatus("❌ Server error (check console)");
+}
   } catch (error) {
     console.error(error);
     setStatus("❌ Submission failed");
@@ -759,33 +776,117 @@ clone.style.maxHeight = "none";
                             <textarea name="gait_assessment" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
                         </section>
 
-                        {/* SECTION 17 */}
-                        <section className="form-section mb-6 p-4 border-l-4 border-blue-600 bg-slate-50 rounded-lg">
-                            <h3 className="text-lg font-bold mb-4">SECTION 17 — Over-all Diagnostic Group Checklist (ICHD-3)</h3>
+                      {/* SECTION 18 — Over-all Diagnostic Group Checklist */}
+<section className="form-section mb-6 p-4 border-l-4 border-blue-600 bg-slate-50 rounded-lg">
+  <h3 className="text-lg font-bold mb-4">
+    SECTION 18 — Over-all Diagnostic Group Checklist (Doctor Section, ICHD-3)
+  </h3>
 
-                            <label className="block font-bold mt-3.5">PART 1 — Primary Headaches</label>
-                            <div className="checkbox-group flex flex-col gap-2 mt-2">
-                                {['Migraine without aura', 'Migraine with aura', 'Chronic migraine', 'Tension-type headache', 'Cluster headache', 'Trigeminal autonomic cephalalgias'].map(dh => (
-                                    <label key={dh} className="font-normal flex items-center gap-2">
-                                        <input type="checkbox" name="primary_diagnosis[]" value={dh} /> {dh}
-                                    </label>
-                                ))}
-                            </div>
+  {/* PART 1 */}
+  <h4 className="font-semibold mt-4 mb-2">PART 1 — Primary Headaches</h4>
 
-                            <label className="block font-bold mt-3.5">PART 2 — Secondary Headaches</label>
-                            <textarea name="secondary_headaches" placeholder="Specify" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
+  <div className="space-y-2">
+    {[
+      "Migraine without aura",
+      "Migraine with aura",
+      "Migraine with typical aura",
+      "Migraine with brainstem aura",
+      "Hemiplegic migraine",
+      "Retinal migraine",
+      "Chronic Migraine",
+      "Status Migrainosus",
+      "Persistent aura without infarction",
+      "Migrainous infarction",
+      "Migraine aura triggered seizure",
+      "Probable Migraine without aura",
+      "Probable Migraine with aura",
+      "Recurrent gastrointestinal disturbance",
+      "Benign paroxysmal vertigo",
+      "Benign paroxysmal torticollis",
+      "Infrequent episodic tension-type headache",
+      "Frequent episodic tension-type headache",
+      "Chronic tension-type headache",
+      "Probable tension-type headache",
+      "Cluster headache",
+      "Paroxysmal hemicrania",
+      "SUNCT",
+      "SUNA",
+      "Hemicrania continua",
+      "Probable trigeminal autonomic cephalalgia",
+      "Primary cough headache",
+      "Primary exercise headache",
+      "Primary headache associated with sexual activity",
+      "Primary thunderclap headache",
+      "Cold-stimulus headache",
+      "External-pressure headache",
+      "Primary stabbing headache",
+      "Nummular headache",
+      "Hypnic headache",
+      "New daily persistent headache (NDPH)"
+    ].map(item => (
+      <label key={item} className="flex items-center gap-2">
+        <input type="checkbox" name="diagnostic_group[]" value={item} />
+        {item}
+      </label>
+    ))}
+  </div>
 
-                            <label className="block font-bold mt-3.5">PART 3 — Painful Cranial Neuropathies & Other Headaches</label>
-                            <textarea name="cranial_neuropathies" placeholder="Specify" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
+  {/* PART 2 */}
+  <h4 className="font-semibold mt-6 mb-2">PART 2 — Secondary Headaches</h4>
 
-                            <label className="block font-bold mt-3.5">Appendix Diagnostic Criteria</label>
-                            <textarea name="appendix_criteria" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
-                        </section>
-                        {/* I will allow the user to see that I simplified for the prototype, but I should probably implement the button and logic properly. 
-                  Given the request is "Migrate", I should try to be complete. 
-                  I'll implement the submit button logic.
-                 */}
-                    </div>
+  {[
+    "Headache attributed to trauma or injury",
+    "Headache attributed to cranial / cervical vascular disorder",
+    "Headache attributed to non-vascular intracranial disorder",
+    "Headache attributed to substance or withdrawal",
+    "Headache attributed to infection",
+    "Headache attributed to disorder of homoeostasis",
+    "Headache attributed to cranial / facial structures",
+    "Headache attributed to psychiatric disorder"
+  ].map(item => (
+    <label key={item} className="flex items-center gap-2">
+      <input type="checkbox" name="secondary_headache[]" value={item} />
+      {item}
+    </label>
+  ))}
+
+  <label className="block font-semibold mt-3">Specify / Comments</label>
+  <textarea
+    name="secondary_headache_comments"
+    className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"
+  />
+
+  {/* PART 3 */}
+  <h4 className="font-semibold mt-6 mb-2">
+    PART 3 — Painful Cranial Neuropathies & Other Headaches
+  </h4>
+
+  {[
+    "Trigeminal neuralgia",
+    "Painful trigeminal neuropathy",
+    "Glossopharyngeal neuralgia",
+    "Occipital neuralgia",
+    "Neck-tongue syndrome",
+    "Painful optic neuritis",
+    "Tolosa–Hunt syndrome",
+    "Burning mouth syndrome",
+    "Persistent idiopathic facial pain",
+    "Central neuropathic pain",
+    "Headache not elsewhere classified",
+    "Headache unspecified"
+  ].map(item => (
+    <label key={item} className="flex items-center gap-2">
+      <input type="checkbox" name="cranial_neuropathy[]" value={item} />
+      {item}
+    </label>
+  ))}
+
+  <label className="block font-semibold mt-3">Appendix Diagnostic Criteria — Specify</label>
+  <textarea
+    name="appendix_diagnostic_criteria"
+    className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"
+  />
+</section> 
                 </details>
 
                 {/* SCALES */}

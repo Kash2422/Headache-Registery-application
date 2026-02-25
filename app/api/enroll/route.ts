@@ -1,18 +1,25 @@
-import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/lib/db';
-import Patient from '@/models/Patient';
+import { NextResponse } from "next/server";
+import connectDB from "@/lib/mongodb";
+import Enrollment from "@/models/Enrollment";
 
-export async function POST(req: NextRequest) {
-    try {
-        await dbConnect();
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
 
-        const body = await req.json();
+    await connectDB();
+    const entry = await Enrollment.create(body);
 
-        const patient = await Patient.create(body);
+    return NextResponse.json(
+      { success: true, data: entry },
+      { status: 200 }
+    );
 
-        return NextResponse.json({ success: true, data: patient }, { status: 201 });
-    } catch (error: any) {
-        console.error('Error creating patient:', error);
-        return NextResponse.json({ success: false, error: error.message }, { status: 400 });
-    }
+  } catch (error: any) {
+    console.error("API ERROR:", error);
+
+    return NextResponse.json(
+      { error: error.message || "Internal Server Error" },
+      { status: 500 }
+    );
+  }
 }

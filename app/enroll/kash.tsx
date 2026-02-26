@@ -772,122 +772,140 @@ clone.style.maxHeight = "none";
                             <label className="block font-semibold mt-3.5">Extrapyramidal signs</label>
                             <textarea name="extrapyramidal_signs" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
 
-                            <label className="block font-semibold mt-3.5">Gait assessment</label>
-                            <textarea name="gait_assessment" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
-                        </section>
+                           <label className="block font-semibold mt-3.5">Gait assessment</label>
+<textarea
+  name="gait_assessment"
+  className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"
+></textarea>
 
-                      {/* SECTION 18 — Over-all Diagnostic Group Checklist */}
-<section className="form-section mb-6 p-4 border-l-4 border-blue-600 bg-slate-50 rounded-lg">
-  <h3 className="text-lg font-bold mb-4">
+</section>   {/* ✅ CLOSE SECTION 16 — Systemic Examination */}
+
+</div>        {/* ✅ CLOSE super-content (General Headache Characteristics) */}
+</details>    {/* ✅ CLOSE General Headache Characteristics */}
+                            
+
+{/* SECTION 17 — Over-all Diagnostic Group Checklist */}
+<details className="super-section mb-6 rounded-xl bg-white shadow-md overflow-hidden">
+  <summary className="super-header w-full bg-[#1e3a8a] text-white p-4 text-lg border-none cursor-pointer flex justify-between items-center font-semibold list-none">
     SECTION 18 — Over-all Diagnostic Group Checklist (Doctor Section, ICHD-3)
-  </h3>
+    <span className="arrow">▼</span>
+  </summary>
 
-  {/* PART 1 */}
-  <h4 className="font-semibold mt-4 mb-2">PART 1 — Primary Headaches</h4>
+  <div className="super-content p-5">
+    <section className="form-section mb-6 p-4 border-l-4 border-blue-600 bg-slate-50 rounded-lg">
 
-  <div className="space-y-2">
-    {[
-      "Migraine without aura",
-      "Migraine with aura",
-      "Migraine with typical aura",
-      "Migraine with brainstem aura",
-      "Hemiplegic migraine",
-      "Retinal migraine",
-      "Chronic Migraine",
-      "Status Migrainosus",
-      "Persistent aura without infarction",
-      "Migrainous infarction",
-      "Migraine aura triggered seizure",
-      "Probable Migraine without aura",
-      "Probable Migraine with aura",
-      "Recurrent gastrointestinal disturbance",
-      "Benign paroxysmal vertigo",
-      "Benign paroxysmal torticollis",
-      "Infrequent episodic tension-type headache",
-      "Frequent episodic tension-type headache",
-      "Chronic tension-type headache",
-      "Probable tension-type headache",
-      "Cluster headache",
-      "Paroxysmal hemicrania",
-      "SUNCT",
-      "SUNA",
-      "Hemicrania continua",
-      "Probable trigeminal autonomic cephalalgia",
-      "Primary cough headache",
-      "Primary exercise headache",
-      "Primary headache associated with sexual activity",
-      "Primary thunderclap headache",
-      "Cold-stimulus headache",
-      "External-pressure headache",
-      "Primary stabbing headache",
-      "Nummular headache",
-      "Hypnic headache",
-      "New daily persistent headache (NDPH)"
-    ].map(item => (
-      <label key={item} className="flex items-center gap-2">
-        <input type="checkbox" name="diagnostic_group[]" value={item} />
-        {item}
+      {/* PART 1 */}
+      <h4 className="font-semibold mt-4 mb-2">PART 1 — Primary Headaches</h4>
+
+      <div className="space-y-2">
+        {[
+          "Migraine without aura",
+          "Migraine with aura",
+          "Migraine with typical aura",
+          "Migraine with brainstem aura",
+          "Hemiplegic migraine",
+          "Retinal migraine",
+          "Chronic Migraine",
+          "Status Migrainosus",
+          "Persistent aura without infarction",
+          "Migrainous infarction",
+          "Migraine aura triggered seizure",
+          "Probable Migraine without aura",
+          "Probable Migraine with aura",
+          "Recurrent gastrointestinal disturbance",
+          "Benign paroxysmal vertigo",
+          "Benign paroxysmal torticollis",
+          "Infrequent episodic tension-type headache",
+          "Frequent episodic tension-type headache",
+          "Chronic tension-type headache",
+          "Probable tension-type headache",
+          "Cluster headache",
+          "Paroxysmal hemicrania",
+          "SUNCT",
+          "SUNA",
+          "Hemicrania continua",
+          "Probable trigeminal autonomic cephalalgia",
+          "Primary cough headache",
+          "Primary exercise headache",
+          "Primary headache associated with sexual activity",
+          "Primary thunderclap headache",
+          "Cold-stimulus headache",
+          "External-pressure headache",
+          "Primary stabbing headache",
+          "Nummular headache",
+          "Hypnic headache",
+          "New daily persistent headache (NDPH)"
+        ].map(item => (
+          <label key={item} className="flex items-center gap-2">
+            <input type="checkbox" name="diagnostic_group[]" value={item} />
+            {item}
+          </label>
+        ))}
+      </div>
+
+      {/* PART 2 */}
+      <h4 className="font-semibold mt-6 mb-2">PART 2 — Secondary Headaches</h4>
+
+      {[
+        "Headache attributed to trauma or injury",
+        "Headache attributed to cranial / cervical vascular disorder",
+        "Headache attributed to non-vascular intracranial disorder",
+        "Headache attributed to substance or withdrawal",
+        "Headache attributed to infection",
+        "Headache attributed to disorder of homoeostasis",
+        "Headache attributed to cranial / facial structures",
+        "Headache attributed to psychiatric disorder"
+      ].map(item => (
+        <label key={item} className="flex items-center gap-2">
+          <input type="checkbox" name="secondary_headache[]" value={item} />
+          {item}
+        </label>
+      ))}
+
+      <label className="block font-semibold mt-3">Specify / Comments</label>
+      <textarea
+        name="secondary_headache_comments"
+        className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"
+      />
+
+      {/* PART 3 */}
+      <h4 className="font-semibold mt-6 mb-2">
+        PART 3 — Painful Cranial Neuropathies & Other Headaches
+      </h4>
+
+      {[
+        "Trigeminal neuralgia",
+        "Painful trigeminal neuropathy",
+        "Glossopharyngeal neuralgia",
+        "Occipital neuralgia",
+        "Neck-tongue syndrome",
+        "Painful optic neuritis",
+        "Tolosa–Hunt syndrome",
+        "Burning mouth syndrome",
+        "Persistent idiopathic facial pain",
+        "Central neuropathic pain",
+        "Headache not elsewhere classified",
+        "Headache unspecified"
+      ].map(item => (
+        <label key={item} className="flex items-center gap-2">
+          <input type="checkbox" name="cranial_neuropathy[]" value={item} />
+          {item}
+        </label>
+      ))}
+
+      <label className="block font-semibold mt-3">
+        Appendix Diagnostic Criteria — Specify
       </label>
-    ))}
+      <textarea
+        name="appendix_diagnostic_criteria"
+        className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"
+      />
+
+    </section>
   </div>
+</details>
 
-  {/* PART 2 */}
-  <h4 className="font-semibold mt-6 mb-2">PART 2 — Secondary Headaches</h4>
 
-  {[
-    "Headache attributed to trauma or injury",
-    "Headache attributed to cranial / cervical vascular disorder",
-    "Headache attributed to non-vascular intracranial disorder",
-    "Headache attributed to substance or withdrawal",
-    "Headache attributed to infection",
-    "Headache attributed to disorder of homoeostasis",
-    "Headache attributed to cranial / facial structures",
-    "Headache attributed to psychiatric disorder"
-  ].map(item => (
-    <label key={item} className="flex items-center gap-2">
-      <input type="checkbox" name="secondary_headache[]" value={item} />
-      {item}
-    </label>
-  ))}
-
-  <label className="block font-semibold mt-3">Specify / Comments</label>
-  <textarea
-    name="secondary_headache_comments"
-    className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"
-  />
-
-  {/* PART 3 */}
-  <h4 className="font-semibold mt-6 mb-2">
-    PART 3 — Painful Cranial Neuropathies & Other Headaches
-  </h4>
-
-  {[
-    "Trigeminal neuralgia",
-    "Painful trigeminal neuropathy",
-    "Glossopharyngeal neuralgia",
-    "Occipital neuralgia",
-    "Neck-tongue syndrome",
-    "Painful optic neuritis",
-    "Tolosa–Hunt syndrome",
-    "Burning mouth syndrome",
-    "Persistent idiopathic facial pain",
-    "Central neuropathic pain",
-    "Headache not elsewhere classified",
-    "Headache unspecified"
-  ].map(item => (
-    <label key={item} className="flex items-center gap-2">
-      <input type="checkbox" name="cranial_neuropathy[]" value={item} />
-      {item}
-    </label>
-  ))}
-
-  <label className="block font-semibold mt-3">Appendix Diagnostic Criteria — Specify</label>
-  <textarea
-    name="appendix_diagnostic_criteria"
-    className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"
-  />
-</section> 
-                </details>
 
                 {/* SCALES */}
                 <details className="super-section mb-6 rounded-xl bg-white shadow-md overflow-hidden">
@@ -1001,11 +1019,14 @@ clone.style.maxHeight = "none";
                     {status && <p className="mt-4 font-semibold text-lg max-w-md mx-auto">{status}</p>}
                 </div>
 
-            </form>
-            </div>   {/* ⭐ PDF AREA END */}
-            <footer className="p-4 text-center text-xs text-[#666] mt-auto">
-                ©️ Headache Registry Project
-            </footer>
-        </div>
-    );
-    }
+                        </form>
+
+        </div> {/* ⭐ PDF AREA END */}
+
+        <footer className="p-4 text-center text-xs text-[#666] mt-auto">
+            ©️ Headache Registry Project
+        </footer>
+
+    </div>
+);
+}

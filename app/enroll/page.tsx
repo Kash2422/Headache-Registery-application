@@ -748,37 +748,146 @@ html2pdf()
                             <textarea name="extrapyramidal_signs" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
 
                             <label className="block font-semibold mt-3.5">Gait assessment</label>
-                            <textarea name="gait_assessment" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
-                        </section>
+<textarea
+  name="gait_assessment"
+  className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"
+></textarea>
 
-                        {/* SECTION 17 */}
-                        <section className="form-section mb-6 p-4 border-l-4 border-blue-600 bg-slate-50 rounded-lg">
-                            <h3 className="text-lg font-bold mb-4">SECTION 17 — Over-all Diagnostic Group Checklist (ICHD-3)</h3>
+</section>   {/* ✅ CLOSE SECTION 16 */}
+ {/* SECTION 17 — Over-all Diagnostic Group Checklist */}
+<details className="super-section mb-6 rounded-xl bg-white shadow-md overflow-hidden">
+  <summary className="super-header w-full bg-[#1e3a8a] text-white p-4 text-lg border-none cursor-pointer flex justify-between items-center font-semibold list-none">
+    SECTION 17 — Over-all Diagnostic Group Checklist (Doctor Section, ICHD-3)
+    <span className="arrow">▼</span>
+  </summary>
 
-                            <label className="block font-bold mt-3.5">PART 1 — Primary Headaches</label>
-                            <div className="checkbox-group flex flex-col gap-2 mt-2">
-                                {['Migraine without aura', 'Migraine with aura', 'Chronic migraine', 'Tension-type headache', 'Cluster headache', 'Trigeminal autonomic cephalalgias'].map(dh => (
-                                    <label key={dh} className="font-normal flex items-center gap-2">
-                                        <input type="checkbox" name="primary_diagnosis[]" value={dh} /> {dh}
-                                    </label>
-                                ))}
-                            </div>
 
-                            <label className="block font-bold mt-3.5">PART 2 — Secondary Headaches</label>
-                            <textarea name="secondary_headaches" placeholder="Specify" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
+  <div className="super-content p-5">
+    <section className="form-section mb-6 p-4 border-l-4 border-blue-600 bg-slate-50 rounded-lg">
 
-                            <label className="block font-bold mt-3.5">PART 3 — Painful Cranial Neuropathies & Other Headaches</label>
-                            <textarea name="cranial_neuropathies" placeholder="Specify" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
+     {/* PART 1 */}
+<p className="font-semibold mt-4"><b>PART 1: Primary Headaches </b></p>
 
-                            <label className="block font-bold mt-3.5">Appendix Diagnostic Criteria</label>
-                            <textarea name="appendix_criteria" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
-                        </section>
-                        {/* I will allow the user to see that I simplified for the prototype, but I should probably implement the button and logic properly. 
-                  Given the request is "Migrate", I should try to be complete. 
-                  I'll implement the submit button logic.
-                 */}
-                    </div>
-                </details>
+<label><input type="checkbox" /><b> 1. Migraine </b></label><br />
+
+<label className="ml-6"><input type="checkbox" /> 1.1 Migraine without aura</label><br />
+<label className="ml-6"><input type="checkbox" /> 1.2 Migraine with aura</label><br />
+
+<label className="ml-12"><input type="checkbox" /> 1.2.1 Migraine with typical aura</label><br />
+<label className="ml-12"><input type="checkbox" /> 1.2.2 Migraine with brainstem aura</label><br />
+<label className="ml-12"><input type="checkbox" /> 1.2.3 Hemiplegic migraine</label><br />
+<label className="ml-12"><input type="checkbox" /> 1.2.4 Retinal migraine</label><br />
+
+<label className="ml-6"><input type="checkbox" /> 1.3 Chronic Migraine</label><br />
+<label className="ml-6"><input type="checkbox" /> 1.4 Complications of Migraine</label><br />
+
+<label className="ml-12"><input type="checkbox" /> 1.4.1 Status migrainosus</label><br />
+<label className="ml-12"><input type="checkbox" /> 1.4.2 Persistent aura without infarction</label><br />
+<label className="ml-12"><input type="checkbox" /> 1.4.3 Migrainous infarction</label><br />
+<label className="ml-12"><input type="checkbox" /> 1.4.4 Migraine aura-triggered seizure</label><br />
+
+<label className="ml-6"><input type="checkbox" /> 1.5 Probable Migraine</label><br />
+<label className="ml-12"><input type="checkbox" /> 1.5.1 Probable Migraine without aura</label><br />
+<label className="ml-12"><input type="checkbox" /> 1.5.2 Probable Migraine with aura</label><br />
+
+<label className="ml-6"><input type="checkbox" /> 1.6 Episodic syndromes associated with migraine</label><br />
+<label className="ml-12"><input type="checkbox" /> 1.6.1 Recurrent gastrointestinal disturbance</label><br />
+<label className="ml-12"><input type="checkbox" /> 1.6.2 Benign paroxysmal vertigo</label><br />
+<label className="ml-12"><input type="checkbox" /> 1.6.3 Benign paroxysmal torticollis</label>
+
+<hr className="my-4" />
+
+<label><input type="checkbox" /><b>2. Tension-type headache </b></label><br />
+<label className="ml-6"><input type="checkbox" /> 2.1 Infrequent episodic tension-type headache</label><br />
+<label className="ml-6"><input type="checkbox" /> 2.2 Frequent episodic tension-type headache</label><br />
+<label className="ml-6"><input type="checkbox" /> 2.3 Chronic tension-type headache</label><br />
+<label className="ml-6"><input type="checkbox" /> 2.4 Probable tension-type headache</label>
+
+<hr className="my-4" />
+
+<label><input type="checkbox" /><b>3. Trigeminal autonomic cephalalgias</b></label><br />
+<label className="ml-6"><input type="checkbox" /> 3.1 Cluster headache</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.1.1 Episodic cluster headache</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.1.2 Chronic cluster headache</label><br />
+
+<label className="ml-6"><input type="checkbox" /> 3.2 Paroxysmal hemicrania</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.2.1 Episodic paroxysmal hemicrania</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.2.2 Chronic paroxysmal hemicrania</label><br />
+
+<label className="ml-6"><input type="checkbox" /> 3.3 Short-lasting unilateral neuralgiform headache attacks</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.3.1 Short-lasting unilateral neuralgiform headache attacks with conjunctival injection and tearing (SUNCT)</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.3.1.1 Episodic SUNCT</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.3.1.2 Chronic SUNCT</label><br />
+
+<label className="ml-12"><input type="checkbox" /> 3.3.2 Short-lasting unilateral neuralgiform headache attacks with cranial autonomic symptopms (SUNA)</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.3.2.1 Episodic SUNA</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.3.2.2 Chronic SUNA</label><br />
+
+<label className="ml-6"><input type="checkbox" /> 3.4 Hemicrania continua</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.4.1 Hemicrania continua, remitting subtype</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.4.2 Hemicrania continua, unremitting type</label><br />
+<label className="ml-6"><input type="checkbox" /> 3.5 Probable trigeminal autonomic cephalalgia</label>
+<label className="ml-12"><input type="checkbox" /> 3.5.1 Probable cluster headache</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.5.2 Probable paroxysmal hemicrania</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.5.3 Probable short-lasting unilateral neuralgiform headache attacks</label><br />
+<label className="ml-12"><input type="checkbox" /> 3.5.4 Probable hemicrania continua</label><br />
+
+<hr className="my-4" />
+
+<label><input type="checkbox" /> <b>4. Other primary headache disorders</b></label><br />
+<label className="ml-6"><input type="checkbox" /> 4.1 Primary cough headache</label><br />
+<label className="ml-6"><input type="checkbox" /> 4.2 Primary exercise headache</label><br />
+<label className="ml-6"><input type="checkbox" /> 4.3 Primary headache associated with sexual activity</label><br />
+<label className="ml-6"><input type="checkbox" /> 4.4 Primary thunderclap headache</label><br />
+<label className="ml-6"><input type="checkbox" /> 4.5 Cold-stimulus headache</label><br />
+<label className="ml-6"><input type="checkbox" /> 4.6 External-pressure headache</label><br />
+<label className="ml-6"><input type="checkbox" /> 4.7 Primary stabbing headache</label><br />
+<label className="ml-6"><input type="checkbox" /> 4.8 Nummular headache</label><br />
+<label className="ml-6"><input type="checkbox" /> 4.9 Hypnic headache</label><br />
+<label className="ml-6"><input type="checkbox" /> 4.10 New daily persistent headache (NDPH)</label>
+
+<hr className="my-4" />
+
+<p className="font-semibold"><b>PART 2: Secondary Headaches</b></p>
+
+<label><input type="checkbox" /> 5. Headache attributed to trauma or injury</label><br />
+<label><input type="checkbox" /> 6. Headache attributed to cranial/cervical vascular disorder</label><br />
+<label><input type="checkbox" /> 7. Headache attributed to non-vascular intracranial disorder</label><br />
+<label><input type="checkbox" /> 8. Headache attributed to substance or withdrawal</label><br />
+<label><input type="checkbox" /> 9. Headache attributed to infection</label><br />
+<label><input type="checkbox" /> 10. Headache attributed to disorder of homeostasis</label><br />
+<label><input type="checkbox" /> 11. Headache or facial pain attributed to disorder of cranial, neck, eyes, ears, nose</label><br />
+<label><input type="checkbox" /> 12. Headache attributed to psychiatric disorder</label>
+
+<hr className="my-4" />
+
+<p className="font-semibold"><b>PART 3: Painful Cranial Neuropathies & Other Headaches </b></p>
+<label className="ml-6"><input type="checkbox" /> 13.1 Pain attributed to a lesion or disease of the trigeminal nerve</label><br />
+
+<label><input type="checkbox" /> 13.1.1 Trigeminal neuralgia</label><br />
+<label><input type="checkbox" /> 13.1.2 Painful trigeminal neuropathy</label><br />
+<label><input type="checkbox" /> 13.2 Glossopharyngeal neuralgia</label><br />
+<label><input type="checkbox" /> 13.3 Pain attributed to a lesion or disease of nervus intermedius</label><br />
+<label><input type="checkbox" /> 13.4 Occipital neuralgia</label><br />
+<label><input type="checkbox" /> 13.5 Neck-tongue syndrome</label><br />
+<label><input type="checkbox" /> 13.6 Painful optic neuritis</label><br />
+<label><input type="checkbox" /> 13.7 Headache attributed to ischaemic ocular motor nerve palsy</label><br />
+<label><input type="checkbox" /> 13.8 Tolosa–Hunt syndrome</label><br />
+<label><input type="checkbox" /> 13.9 Paratrigeminal oculosympathetic (Raeder's syndrome)</label><br />
+<label><input type="checkbox" /> 13.10 Recurrent painful opthalmoplegic neuropathy</label><br />
+<label><input type="checkbox" /> 13.11 Burning mouth syndrome</label><br />
+<label><input type="checkbox" /> 13.12 Persistent idiopathic facial pain</label><br />
+<label><input type="checkbox" /> 13.13 Central neuropathic pain</label><br />
+<label><input type="checkbox" /><b> 14. Other headache disorders </b></label><br />
+<label><input type="checkbox" /> 14.1 Headache not elsewhere classified</label><br />
+<label><input type="checkbox" /> 14.2 Headache unspecified</label>
+
+    </section>
+  </div>
+</details>
+</div>      {/* ✅ CLOSE super-content */}
+</details>  {/* ✅ CLOSE General Headache Characteristics */}
+                       
 
                 {/* SCALES */}
                 <details className="super-section mb-6 rounded-xl bg-white shadow-md overflow-hidden">
@@ -828,7 +937,7 @@ html2pdf()
                             <h3 className="text-lg font-bold mb-4">SECTION 19 — Investigations</h3>
                             <label className="block font-semibold mt-3.5">Investigations advised/done</label>
                             <div className="checkbox-group flex flex-col gap-2 mt-2">
-                                {['Neuroimaging (MRI/CT)', 'Blood tests', 'CSF analysis', 'EEG', 'Other'].map(inv => (
+                                {['CBC', 'ESR', 'Liver Function Tests', 'Renal Function Tests', 'ANA', 'Electrolytes', 'Vasculitis Profile', 'Vitamin B12', 'Folate', 'HbA1c', 'ENA', 'HIV', 'HBsAg', 'HCV', 'FBS', 'PPBS', 'ECG', 'CT Brain', 'CT Angiogram Head & Neck', 'MR Brain', 'MR Angiogram', 'CRP', 'CSF opening pressure', 'CSF cells', 'CSF Sugar', 'CSF protein', 'CSF Other Tests', 'X-ray Cervical Spine', 'Thyroid Panel', 'Eye Evaluation', 'Lipid Profile', 'Other'].map(inv => (
                                     <label key={inv} className="font-normal flex items-center gap-2">
                                         <input type="checkbox" name="investigations[]" value={inv} /> {inv}
                                     </label>
@@ -836,45 +945,127 @@ html2pdf()
                             </div>
                         </section>
 
-                        {/* SECTION 21 (Provisional Diagnosis) */}
+                       
+                        {/* SECTION 20 & 22 (Treatment Plan) */}
+                        <section className="form-section mb-6 p-4 border-l-4 border-blue-600 bg-slate-50 rounded-lg">
+                            <h3 className="text-lg font-bold mb-4">SECTION 20 - Medication</h3>
+
+                            {/* Acute Medications */}
+  <h4 className="font-semibold mt-4 mb-2"><b>Acute Medications</b></h4>
+
+  <label className="block font-semibold mt-3">Drug group</label>
+  <input type="text" name="acute_drug_group" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Drug name + route</label>
+  <input type="text" name="acute_drug_name_route" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Time since started</label>
+  <input type="text" name="acute_time_since_started" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Starting dose</label>
+  <input type="text" name="acute_starting_dose" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Final dose</label>
+  <input type="text" name="acute_final_dose" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Adverse effects</label>
+  <input type="text" name="acute_adverse_effects" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Tolerance issues</label>
+  <input type="text" name="acute_tolerance_issues" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Number of days used per month</label>
+  <input type="text" name="acute_days_per_month" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Effectiveness</label>
+  <input type="text" name="acute_effectiveness" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <hr className="my-6 border-gray-300" />
+
+  {/* Preventive Medications */}
+  <h4 className="font-semibold mb-2"><b>Preventive Medications</b></h4>
+
+  <label className="block font-semibold mt-3">Drug group</label>
+  <input type="text" name="preventive_drug_group" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Drug name + route</label>
+  <input type="text" name="preventive_drug_name_route" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Time since started</label>
+  <input type="text" name="preventive_time_since_started" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Starting dose</label>
+  <input type="text" name="preventive_starting_dose" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Final dose</label>
+  <input type="text" name="preventive_final_dose" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Adverse effects</label>
+  <input type="text" name="preventive_adverse_effects" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Tolerance issues</label>
+  <input type="text" name="preventive_tolerance_issues" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Number of days used per month</label>
+  <input type="text" name="preventive_days_per_month" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <label className="block font-semibold mt-3">Effectiveness</label>
+  <input type="text" name="preventive_effectiveness" className="w-full p-2.5 mt-1 rounded-md border border-slate-300" />
+
+  <hr className="my-6 border-gray-300" />
+
+  {/* Devices / Procedures */}
+  <h4 className="font-semibold mb-2"> <b>Devices / Nerve Blocks / Botox</b></h4>
+
+  <textarea
+    name="devices_nerve_blocks_botox"
+    className="w-full p-2.5 mt-2 rounded-md border border-slate-300 min-h-[120px]"
+    placeholder="Details..."
+  />
+</section>
+ {/* SECTION 21 (Provisional Diagnosis) */}
                         <section className="form-section mb-6 p-4 border-l-4 border-blue-600 bg-slate-50 rounded-lg">
                             <h3 className="text-lg font-bold mb-4">SECTION 21 — Provisional Diagnosis</h3>
-                            <label className="block font-semibold mt-3.5">Provisional Diagnosis (ICD-10/ICHD-3 Code & Name)</label>
-                            <textarea name="provisional_diagnosis" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
+                             <div className="checkbox-group flex flex-col gap-2 mt-2">
+                                {['Tension-Type Headache', 'Migraine', 'Cluster/TACs', 'Other primary headache disorders', 'Cranial Neuralgia', 'Orofacial Pain', 'Secondary Headache', 'Uncertain/ Under Evaluation'].map(inv => (
+                                    <label key={inv} className="font-normal flex items-center gap-2">
+                                        <input type="checkbox" name="provisional diagnosis[]" value={inv} /> {inv}
+                                    </label>
+                                ))}
+                            </div>
 
                             <label className="block font-semibold mt-3.5">Specific Subtype (if applicable)</label>
                             <input type="text" name="specific_subtype" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300" />
                         </section>
 
-                        {/* SECTION 20 & 22 (Treatment Plan) */}
-                        <section className="form-section mb-6 p-4 border-l-4 border-blue-600 bg-slate-50 rounded-lg">
-                            <h3 className="text-lg font-bold mb-4">SECTION 20 & 22 — Treatment Plan</h3>
+{/* SECTION 22 — Treatment Plan */}
+<section className="form-section mb-6 p-4 border-l-4 border-blue-600 bg-slate-50 rounded-lg">
+  <h3 className="text-lg font-bold mb-4">SECTION 22 — Treatment Plan</h3>
 
-                            <label className="block font-semibold mt-3.5">Acute Medications (Current/Previous)</label>
-                            <textarea name="acute_medications" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
+  <label className="block font-semibold mt-3.5">Acute medicines prescribed</label>
+  <textarea
+    name="acute_medicines_prescribed"
+    className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[120px]"
+  />
 
-                            <label className="block font-semibold mt-3.5">Preventive Medications (Current/Previous)</label>
-                            <textarea name="preventive_medications" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
+  <label className="block font-semibold mt-4">Preventive medicines prescribed</label>
+  <textarea
+    name="preventive_medicines_prescribed"
+    className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[120px]"
+  />
 
-                            <label className="block font-semibold mt-3.5">Devices / Procedures</label>
-                            <textarea name="devices_procedures" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
+  <label className="block font-semibold mt-4">Non-pharmacologic recommendations</label>
+  <textarea
+    name="non_pharmacologic_recommendations"
+    className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[120px]"
+  />
 
-                            <hr className="my-6 border-gray-300" />
-                            <h4 className="font-bold text-md mb-2">Prescribed Treatment Plan</h4>
-
-                            <label className="block font-semibold mt-3.5">Acute Medicines Prescribed</label>
-                            <textarea name="acute_medicines_prescribed" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
-
-                            <label className="block font-semibold mt-3.5">Preventive Medicines Prescribed</label>
-                            <textarea name="preventive_medicines_prescribed" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
-
-                            <label className="block font-semibold mt-3.5">Non-pharmacologic / Lifestyle Recommendations</label>
-                            <textarea name="non_pharmacologic_recommendations" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
-
-                            <label className="block font-semibold mt-3.5">Investigations Recommended</label>
-                            <textarea name="investigations_recommended" className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[90px]"></textarea>
-                        </section>
-
+  <label className="block font-semibold mt-4">Investigations recommended</label>
+  <textarea
+    name="investigations_recommended"
+    className="w-full p-2.5 mt-1.5 rounded-md border border-slate-300 min-h-[120px]"
+  />
+</section>
                         {/* SECTION 23 (Follow Up) */}
                         <section className="form-section mb-6 p-4 border-l-4 border-blue-600 bg-slate-50 rounded-lg">
                             <h3 className="text-lg font-bold mb-4">SECTION 23 — Patient Instructions & Follow-up</h3>
